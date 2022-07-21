@@ -153,10 +153,6 @@ static NetworkBufferDescriptor_t * prvPacketBuffer_to_NetworkBuffer( const void 
         #endif
 
         xEventMessage.eEventType = eDHCP_RA_Event;
-
-        /* casting void * to uintptr_t exception; it is guaranteed by the
-         * implementation that uintptr_t fits a pointer size on the platform */
-        /* coverity[misra_c_2012_rule_11_6_violation] */
         xEventMessage.pvData = ( void * ) pxEndPoint;
         #if ( ipconfigUSE_DHCPv6 == 1 ) || ( ipconfigUSE_DHCP == 1 )
             {
