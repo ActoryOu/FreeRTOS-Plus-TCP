@@ -79,14 +79,29 @@
 
     void vIPSetARPResolutionTimerEnableState( BaseType_t xEnableState );
 
-    #if ( ipconfigUSE_DHCP != 0 )
+    #if ( ipconfigUSE_DHCP == 1 ) || ( ipconfigUSE_RA == 1 ) || ( ipconfigUSE_DHCPv6 == 1 )
 
 /**
- * @brief Enable/disable the DHCP timer.
+ * @brief Enable or disable the DHCP/DHCPv6/RA timer.
+ *
+ * @param[in] pxEndPoint: The end-point that needs to acquire an IP-address.
  * @param[in] xEnableState: pdTRUE - enable timer; pdFALSE - disable timer.
  */
-        void vIPSetDHCPTimerEnableState( BaseType_t xEnableState );
-    #endif
+        void vIPSetDHCP_RATimerEnableState( struct xNetworkEndPoint * pxEndPoint,
+                                            BaseType_t xEnableState );
+    #endif /* ( ipconfigUSE_DHCP == 1 ) || ( ipconfigUSE_RA == 1 ) || ( ipconfigUSE_DHCPv6 == 1 ) */
+
+    #if ( ipconfigUSE_DHCP == 1 ) || ( ipconfigUSE_RA == 1 )
+
+/**
+ * @brief Set the reload time of the DHCP/DHCPv6/RA timer.
+ *
+ * @param[in] pxEndPoint: The end-point that needs to acquire an IP-address.
+ * @param[in] uxClockTicks: The number of clock-ticks after which the timer should expire.
+ */
+        void vIPReloadDHCP_RATimer( struct xNetworkEndPoint * pxEndPoint,
+                                    TickType_t uxClockTicks )
+    #endif /* ( ipconfigUSE_DHCP == 1 ) || ( ipconfigUSE_RA == 1 ) */
 
     #if ( ipconfigDNS_USE_CALLBACKS != 0 )
 
@@ -106,9 +121,10 @@
     #if ( ipconfigDNS_USE_CALLBACKS != 0 )
         void vDNSTimerReload( uint32_t ulCheckTime );
     #endif
+    void vNetworkTimerReload( TickType_t xTime );
 
     #ifdef __cplusplus
-        } /* extern "C" */
+}         /* extern "C" */
     #endif
 
 #endif /* FREERTOS_IP_TIMERS_H */

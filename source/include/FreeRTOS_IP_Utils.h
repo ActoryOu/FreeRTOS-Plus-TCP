@@ -80,6 +80,15 @@
  * @return The network buffer if the alignment is correct. Else a NULL is returned.
  */
         NetworkBufferDescriptor_t * pxPacketBuffer_to_NetworkBuffer( const void * pvBuffer );
+
+/**
+ * @brief Get the UDP payload buffer from the network buffer.
+ *
+ * @param[in] pxNetworkBuffer: Pointer to the network buffer.
+ *
+ * @return The UDP payload buffer if the alignment is correct. Else a NULL is returned.
+ */
+        uint8_t * pcNetworkBuffer_to_UDPPayloadBuffer( NetworkBufferDescriptor_t * pxNetworkBuffer );
     #endif
 
 /**
@@ -92,10 +101,18 @@
  * @brief Called to create a network connection when the stack is first
  *        started, or when the network connection is lost.
  */
-    void prvProcessNetworkDownEvent( void );
+    void vProcessNetworkDownEvent( NetworkInterface_t * pxInterface );
+
+/* Get the size of the IP-header.
+ * 'usFrameType' must be filled in if IPv6is to be recognised. */
+    size_t uxIPHeaderSizePacket( const NetworkBufferDescriptor_t * pxNetworkBuffer );
+
+/* Get the size of the IP-header.
+ * The socket is checked for its type: IPv4 or IPv6. */
+    size_t uxIPHeaderSizeSocket( const FreeRTOS_Socket_t * pxSocket );
 
     #ifdef __cplusplus
-        } /* extern "C" */
+}         /* extern "C" */
     #endif
 
 #endif /* FREERTOS_IP_UTILS_H */
