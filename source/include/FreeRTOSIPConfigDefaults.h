@@ -83,7 +83,7 @@
  */
 
 #ifndef ipconfigENABLE
-    #define ipconfigENABLE     ( 1 )
+    #define ipconfigENABLE    ( 1 )
 #endif
 
 #ifndef ipconfigDISABLE
@@ -210,14 +210,6 @@
         #define ipconfigND_CACHE_ENTRIES    24
     #endif
 
-    #if ( ipconfigND_CACHE_ENTRIES < 1 )
-        #error ipconfigND_CACHE_ENTRIES must be at least 1
-    #endif
-
-    #if ( ipconfigND_CACHE_ENTRIES > SIZE_MAX )
-        #error ipconfigND_CACHE_ENTRIES overflows a size_t
-    #endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -256,14 +248,6 @@
             #define ipconfigRA_SEARCH_COUNT    3U
         #endif
 
-        #if ( ipconfigRA_SEARCH_COUNT < 0 )
-            #error ipconfigRA_SEARCH_COUNT must be at least 0
-        #endif
-
-        #if ( ipconfigRA_SEARCH_COUNT > UINT_FAST8_MAX )
-            #error ipconfigRA_SEARCH_COUNT overflows a UBaseType_t
-        #endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -280,14 +264,6 @@
 
         #ifndef ipconfigRA_SEARCH_TIME_OUT_MSEC
             #define ipconfigRA_SEARCH_TIME_OUT_MSEC    10000U
-        #endif
-
-        #if ( ipconfigRA_SEARCH_TIME_OUT_MSEC < 0 )
-            #error ipconfigRA_SEARCH_TIME_OUT_MSEC must be at least 0
-        #endif
-
-        #if ( ipconfigRA_SEARCH_TIME_OUT_MSEC > SIZE_MAX )
-            #error ipconfigRA_SEARCH_TIME_OUT_MSEC must be at most portMAX_DELAY * portTICK_PERIOD_MS
         #endif
 
 /*---------------------------------------------------------------------------*/
@@ -307,14 +283,6 @@
             #define ipconfigRA_IP_TEST_COUNT    3U
         #endif
 
-        #if ( ipconfigRA_IP_TEST_COUNT < 0 )
-            #error ipconfigRA_IP_TEST_COUNT must be at least 0
-        #endif
-
-        #if ( ipconfigRA_IP_TEST_COUNT > UINT_FAST8_MAX )
-            #error ipconfigRA_IP_TEST_COUNT overflows a UBaseType_t
-        #endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -330,14 +298,6 @@
 
         #ifndef ipconfigRA_IP_TEST_TIME_OUT_MSEC
             #define ipconfigRA_IP_TEST_TIME_OUT_MSEC    1500U
-        #endif
-
-        #if ( ipconfigRA_IP_TEST_TIME_OUT_MSEC < 0 )
-            #error ipconfigRA_IP_TEST_TIME_OUT_MSEC must be at least 0
-        #endif
-
-        #if ( ipconfigRA_IP_TEST_TIME_OUT_MSEC > SIZE_MAX )
-            #error ipconfigRA_IP_TEST_TIME_OUT_MSEC must be at most portMAX_DELAY * portTICK_PERIOD_MS
         #endif
 
 /*---------------------------------------------------------------------------*/
@@ -367,14 +327,6 @@
 
 #ifndef ipconfigENDPOINT_DNS_ADDRESS_COUNT
     #define ipconfigENDPOINT_DNS_ADDRESS_COUNT    UINT8_C( 2 )
-#endif
-
-#if ( ipconfigENDPOINT_DNS_ADDRESS_COUNT < 1 )
-    #error ipconfigENDPOINT_DNS_ADDRESS_COUNT must be at least 1
-#endif
-
-#if ( ipconfigENDPOINT_DNS_ADDRESS_COUNT > UINT8_MAX )
-    #error ipconfigENDPOINT_DNS_ADDRESS_COUNT overflows a uint8_t
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -475,14 +427,6 @@
     #define ipconfigBUFFER_PADDING    0U
 #endif
 
-#if ( ipconfigBUFFER_PADDING < 0 )
-    #error ipconfigBUFFER_PADDING must be at least 0
-#endif
-
-#if ( ipconfigBUFFER_PADDING > SIZE_MAX )
-    #error ipconfigBUFFER_PADDING overflows a size_t
-#endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -503,14 +447,6 @@
 
 #ifndef ipconfigPACKET_FILLER_SIZE
     #define ipconfigPACKET_FILLER_SIZE    2U
-#endif
-
-#if ( ipconfigPACKET_FILLER_SIZE < 0 )
-    #error ipconfigPACKET_FILLER_SIZE must be at least 0
-#endif
-
-#if ( ipconfigPACKET_FILLER_SIZE > SIZE_MAX )
-    #error ipconfigPACKET_FILLER_SIZE overflows a size_t
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -717,14 +653,6 @@
     #define ipconfigETHERNET_MINIMUM_PACKET_BYTES    0U
 #endif
 
-#if ( ipconfigETHERNET_MINIMUM_PACKET_BYTES < 0 )
-    #error ipconfigETHERNET_MINIMUM_PACKET_BYTES must be at least 0
-#endif
-
-#if ( ipconfigETHERNET_MINIMUM_PACKET_BYTES > SIZE_MAX )
-    #error ipconfigETHERNET_MINIMUM_PACKET_BYTES overflows a size_t
-#endif
-
 /*---------------------------------------------------------------------------*/
 
 #if ( ipconfigIS_DISABLED( ipconfigETHERNET_DRIVER_FILTERS_FRAME_TYPES ) )
@@ -783,10 +711,6 @@
     #error ipconfigNETWORK_MTU must be at least 46
 #endif
 
-#if ( ipconfigNETWORK_MTU > SIZE_MAX )
-    #error ipconfigNETWORK_MTU overflows a size_t
-#endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -814,14 +738,6 @@
 
 #ifndef ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS
     #define ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS    45U
-#endif
-
-#if ( ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS < 1 )
-    #error ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS must be at least 1
-#endif
-
-#if ( ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS > SIZE_MAX )
-    #error ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS overflows a size_t
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -955,10 +871,6 @@
     #error ipconfigEVENT_QUEUE_LENGTH must be at least ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS + 5
 #endif
 
-#if ( ipconfigEVENT_QUEUE_LENGTH > SIZE_MAX )
-    #error ipconfigEVENT_QUEUE_LENGTH overflows a size_t
-#endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -996,14 +908,6 @@
     #define ipconfigIP_TASK_PRIORITY    ( configMAX_PRIORITIES - 2U )
 #endif
 
-#if ( ipconfigIP_TASK_PRIORITY < 0 )
-    #error ipconfigIP_TASK_PRIORITY must be at least 0
-#endif
-
-#if ( ipconfigIP_TASK_PRIORITY > ( configMAX_PRIORITIES - 1 ) )
-    #error ipconfigIP_TASK_PRIORITY must be at most configMAX_PRIORITIES - 1
-#endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -1022,14 +926,6 @@
 
 #ifndef ipconfigIP_TASK_STACK_SIZE_WORDS
     #define ipconfigIP_TASK_STACK_SIZE_WORDS    ( configMINIMAL_STACK_SIZE * 5U )
-#endif
-
-#if ( ipconfigIP_TASK_STACK_SIZE_WORDS < configMINIMAL_STACK_SIZE )
-    #error ipconfigIP_TASK_STACK_SIZE_WORDS must be at least configMINIMAL_STACK_SIZE
-#endif
-
-#if ( ipconfigIP_TASK_STACK_SIZE_WORDS > SIZE_MAX )
-    #error ipconfigIP_TASK_STACK_SIZE_WORDS overflows a size_t
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -1196,14 +1092,6 @@
             #define ipconfigTCP_HANG_PROTECTION_TIME    30U
         #endif
 
-        #if ( ipconfigTCP_HANG_PROTECTION_TIME < 0U )
-            #error ipconfigTCP_HANG_PROTECTION_TIME must be at least 0
-        #endif
-
-        #if ( ipconfigTCP_HANG_PROTECTION_TIME > SIZE_MAX )
-            #error ipconfigTCP_HANG_PROTECTION_TIME must be at most portMAX_DELAY / configTICK_RATE_HZ
-        #endif
-
 /*-------------------------------------------------------------------*/
 
     #endif /* if ( ipconfigIS_ENABLED( ipconfigTCP_HANG_PROTECTION ) ) */
@@ -1273,14 +1161,6 @@
             #define ipconfigTCP_KEEP_ALIVE_INTERVAL    20U
         #endif
 
-        #if ( ipconfigTCP_KEEP_ALIVE_INTERVAL < 0U )
-            #error ipconfigTCP_KEEP_ALIVE_INTERVAL must be at least 0
-        #endif
-
-        #if ( ipconfigTCP_KEEP_ALIVE_INTERVAL > SIZE_MAX )
-            #error ipconfigTCP_KEEP_ALIVE_INTERVAL must be at most portMAX_DELAY / configTICK_RATE_HZ
-        #endif
-
 /*-------------------------------------------------------------------*/
 
     #endif /* if ( ipconfigIS_ENABLED( ipconfigTCP_KEEP_ALIVE ) ) */
@@ -1312,14 +1192,6 @@
 
     #ifndef ipconfigTCP_MSS
         #define ipconfigTCP_MSS    ( ipconfigNETWORK_MTU - 40U )
-    #endif
-
-    #if ( ipconfigTCP_MSS < 1 )
-        #error ipconfigTCP_MSS must be at least 1
-    #endif
-
-    #if ( ipconfigTCP_MSS > SIZE_MAX )
-        #error ipconfigTCP_MSS overflows a size_t
     #endif
 
 /*-----------------------------------------------------------------------*/
@@ -1356,14 +1228,6 @@
         #define ipconfigTCP_RX_BUFFER_LENGTH    ( 4U * ipconfigTCP_MSS )
     #endif
 
-    #if ( ipconfigTCP_RX_BUFFER_LENGTH < 0 )
-        #error ipconfigTCP_RX_BUFFER_LENGTH must be at least 0
-    #endif
-
-    #if ( ipconfigTCP_RX_BUFFER_LENGTH > SIZE_MAX )
-        #error ipconfigTCP_RX_BUFFER_LENGTH overflows a size_t
-    #endif
-
 /*-----------------------------------------------------------------------*/
 
 /*
@@ -1378,14 +1242,6 @@
 
     #ifndef ipconfigTCP_TX_BUFFER_LENGTH
         #define ipconfigTCP_TX_BUFFER_LENGTH    ( 4U * ipconfigTCP_MSS )
-    #endif
-
-    #if ( ipconfigTCP_TX_BUFFER_LENGTH < 0 )
-        #error ipconfigTCP_TX_BUFFER_LENGTH must be at least 0
-    #endif
-
-    #if ( ipconfigTCP_TX_BUFFER_LENGTH > SIZE_MAX )
-        #error ipconfigTCP_TX_BUFFER_LENGTH overflows a size_t
     #endif
 
 /*-----------------------------------------------------------------------*/
@@ -1404,14 +1260,6 @@
 
     #ifndef ipconfigTCP_TIME_TO_LIVE
         #define ipconfigTCP_TIME_TO_LIVE    UINT8_C( 128 )
-    #endif
-
-    #if ( ipconfigTCP_TIME_TO_LIVE < 0 )
-        #error ipconfigTCP_TIME_TO_LIVE must be at least 0
-    #endif
-
-    #if ( ipconfigTCP_TIME_TO_LIVE > UINT8_MAX )
-        #error ipconfigTCP_TIME_TO_LIVE overflows a uint8_t
     #endif
 
 /*-----------------------------------------------------------------------*/
@@ -1476,14 +1324,6 @@
             #define ipconfigTCP_SRTT_MINIMUM_VALUE_MS    UINT32_C( 50 )
         #endif
 
-        #if ( ipconfigTCP_SRTT_MINIMUM_VALUE_MS < 0 )
-            #error ipconfigTCP_SRTT_MINIMUM_VALUE_MS must be at least 0
-        #endif
-
-        #if ( ipconfigTCP_SRTT_MINIMUM_VALUE_MS > UINT32_MAX )
-            #error ipconfigTCP_SRTT_MINIMUM_VALUE_MS overflows a uint32_t
-        #endif
-
 /*-------------------------------------------------------------------*/
 
 /*
@@ -1515,14 +1355,6 @@
 
         #ifndef ipconfigTCP_WIN_SEG_COUNT
             #define ipconfigTCP_WIN_SEG_COUNT    256U
-        #endif
-
-        #if ( ipconfigTCP_WIN_SEG_COUNT < 1U )
-            #error ipconfigTCP_WIN_SEG_COUNT must be at least 1
-        #endif
-
-        #if ( ipconfigTCP_WIN_SEG_COUNT > SIZE_MAX )
-            #error ipconfigTCP_WIN_SEG_COUNT overflows a size_t
         #endif
 
 /*-------------------------------------------------------------------*/
@@ -1581,14 +1413,6 @@
 
 #ifndef ipconfigUDP_MAX_RX_PACKETS
     #define ipconfigUDP_MAX_RX_PACKETS    0U
-#endif
-
-#if ( ipconfigUDP_MAX_RX_PACKETS < 0 )
-    #error ipconfigUDP_MAX_RX_PACKETS must be at least 0
-#endif
-
-#if ( ipconfigUDP_MAX_RX_PACKETS > UINT_FAST8_MAX )
-    #error ipconfigUDP_MAX_RX_PACKETS overflows a UBaseType_t
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -1662,14 +1486,6 @@
 
 #ifndef ipconfigUDP_TIME_TO_LIVE
     #define ipconfigUDP_TIME_TO_LIVE    UINT8_C( 128 )
-#endif
-
-#if ( ipconfigUDP_TIME_TO_LIVE < 0 )
-    #error ipconfigUDP_TIME_TO_LIVE must be at least 0
-#endif
-
-#if ( ipconfigUDP_TIME_TO_LIVE > UINT8_MAX )
-    #error ipconfigUDP_TIME_TO_LIVE overflows a uint8_t
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -2073,6 +1889,7 @@
 #endif
 
 #if ( ( ipconfigUSE_DHCP != ipconfigDISABLE ) && ( ipconfigNETWORK_MTU < 586U ) )
+
 /* DHCP must be able to receive an options field of 312 bytes, the fixed
  * part of the DHCP packet is 240 bytes, and the IP/UDP headers take 28 bytes. */
     #error ipconfigNETWORK_MTU needs to be at least 586 to use DHCP
@@ -2103,7 +1920,7 @@
     #error ipconfigUSE_DHCPv6 should be pdFALSE or pdTRUE
 #endif
 
-#if ( ipconfigIS_ENABLED( ipconfigUSE_DHCPv6 ) && ipconfigIS_DISABLED( ipconfigUSE_IPv6  ) )
+#if ( ipconfigIS_ENABLED( ipconfigUSE_DHCPv6 ) && ipconfigIS_DISABLED( ipconfigUSE_IPv6 ) )
     #error DHCPv6 Cannot be enabled without IPv6
 #endif
 
@@ -2314,14 +2131,6 @@
             #define ipconfigDNS_CACHE_ENTRIES    1U
         #endif
 
-        #if ( ipconfigDNS_CACHE_ENTRIES < 1 )
-            #error ipconfigDNS_CACHE_ENTRIES must be at least 1
-        #endif
-
-        #if ( ipconfigDNS_CACHE_ENTRIES > SIZE_MAX )
-            #error ipconfigDNS_CACHE_ENTRIES overflows a size_t
-        #endif
-
 /*-------------------------------------------------------------------*/
 
 /*
@@ -2348,14 +2157,6 @@
             #define ipconfigDNS_CACHE_NAME_LENGTH    254U
         #endif
 
-        #if ( ipconfigDNS_CACHE_NAME_LENGTH < 1 )
-            #error ipconfigDNS_CACHE_NAME_LENGTH must be at least 1
-        #endif
-
-        #if ( ipconfigDNS_CACHE_NAME_LENGTH > SIZE_MAX )
-            #error ipconfigDNS_CACHE_NAME_LENGTH overflows a size_t
-        #endif
-
 /*-------------------------------------------------------------------*/
 
     #endif /* if ( ipconfigIS_ENABLED( ipconfigUSE_DNS_CACHE ) ) */
@@ -2378,12 +2179,8 @@
         #define ipconfigDNS_CACHE_ADDRESSES_PER_ENTRY    1U
     #endif
 
-    #if ( ipconfigDNS_CACHE_ADDRESSES_PER_ENTRY < 1 )
-        #error ipconfigDNS_CACHE_ADDRESSES_PER_ENTRY must be at least 1
-    #endif
-
-    #if ( ipconfigDNS_CACHE_ADDRESSES_PER_ENTRY > SIZE_MAX )
-        #error ipconfigDNS_CACHE_ADDRESSES_PER_ENTRY overflows a size_t
+    #if ( ipconfigIS_DISABLED( ipconfigUSE_DNS_CACHE ) && ( ipconfigDNS_CACHE_ADDRESSES_PER_ENTRY != 1 ) )
+        #error When DNS caching is disabled, please make ipconfigDNS_CACHE_ADDRESSES_PER_ENTRY equal to 1.
     #endif
 
 /*-----------------------------------------------------------------------*/
@@ -2405,14 +2202,6 @@
 
     #ifndef ipconfigDNS_REQUEST_ATTEMPTS
         #define ipconfigDNS_REQUEST_ATTEMPTS    5U
-    #endif
-
-    #if ( ipconfigDNS_REQUEST_ATTEMPTS < 1 )
-        #error ipconfigDNS_REQUEST_ATTEMPTS must be at least 1
-    #endif
-
-    #if ( ipconfigDNS_REQUEST_ATTEMPTS > SIZE_MAX )
-        #error ipconfigDNS_REQUEST_ATTEMPTS overflows a size_t
     #endif
 
 /*-----------------------------------------------------------------------*/
@@ -2598,14 +2387,6 @@
     #define ipconfigARP_CACHE_ENTRIES    10U
 #endif
 
-#if ( ipconfigARP_CACHE_ENTRIES < 1 )
-    #error ipconfigARP_CACHE_ENTRIES must be at least 1
-#endif
-
-#if ( ipconfigARP_CACHE_ENTRIES > SIZE_MAX )
-    #error ipconfigARP_CACHE_ENTRIES overflows a size_t
-#endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -2710,14 +2491,6 @@
     #define ipconfigMAX_ARP_AGE    UINT8_C( 150 )
 #endif
 
-#if ( ipconfigMAX_ARP_AGE < 0 )
-    #error ipconfigMAX_ARP_AGE must be at least 0
-#endif
-
-#if ( ipconfigMAX_ARP_AGE > UINT8_MAX )
-    #error ipconfigMAX_ARP_AGE overflows a uint8_t
-#endif
-
 /*---------------------------------------------------------------------------*/
 
 /*
@@ -2735,14 +2508,6 @@
 
 #ifndef ipconfigMAX_ARP_RETRANSMISSIONS
     #define ipconfigMAX_ARP_RETRANSMISSIONS    UINT8_C( 5 )
-#endif
-
-#if ( ipconfigMAX_ARP_RETRANSMISSIONS < 0 )
-    #error ipconfigMAX_ARP_RETRANSMISSIONS must be at least 0
-#endif
-
-#if ( ipconfigMAX_ARP_RETRANSMISSIONS > UINT8_MAX )
-    #error ipconfigMAX_ARP_RETRANSMISSIONS overflows a uint8_t
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -2855,14 +2620,6 @@
 
     #ifndef ipconfigICMP_TIME_TO_LIVE
         #define ipconfigICMP_TIME_TO_LIVE    UINT8_C( 64 )
-    #endif
-
-    #if ( ipconfigICMP_TIME_TO_LIVE < 0 )
-        #error ipconfigICMP_TIME_TO_LIVE must be at least 0
-    #endif
-
-    #if ( ipconfigICMP_TIME_TO_LIVE > UINT8_MAX )
-        #error ipconfigICMP_TIME_TO_LIVE overflows a uint8_t
     #endif
 
 /*-----------------------------------------------------------------------*/
@@ -3224,14 +2981,6 @@
 
     #ifndef ipconfigTCP_MEM_STATS_MAX_ALLOCATION
         #define ipconfigTCP_MEM_STATS_MAX_ALLOCATION    128U
-    #endif
-
-    #if ( ipconfigTCP_MEM_STATS_MAX_ALLOCATION < 1 )
-        #error ipconfigTCP_MEM_STATS_MAX_ALLOCATION must be at least 1
-    #endif
-
-    #if ( ipconfigTCP_MEM_STATS_MAX_ALLOCATION > SIZE_MAX )
-        #error ipconfigTCP_MEM_STATS_MAX_ALLOCATION overflows a size_t
     #endif
 
 /*-----------------------------------------------------------------------*/
