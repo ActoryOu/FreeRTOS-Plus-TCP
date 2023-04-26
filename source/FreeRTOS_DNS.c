@@ -483,8 +483,6 @@
         }
     #endif /* if ( ipconfigDNS_USE_CALLBACKS == 0 ) */
 
-    #if ( ipconfigINCLUDE_FULL_INET_ADDR == 1 )
-
 /**
  * @brief See if pcHostName contains a valid IPv4 or IPv6 IP-address.
  * @param[in] pcHostName The name to be looked up
@@ -538,7 +536,6 @@
 
             return ulIPAddress;
         }
-    #endif /* ( ipconfigINCLUDE_FULL_INET_ADDR == 1 ) */
 /*-----------------------------------------------------------*/
 
     #if ( ipconfigDNS_USE_CALLBACKS == 1 )
@@ -613,11 +610,7 @@
         {
             /* If the supplied hostname is an IP address, put it in ppxAddressInfo
              * and return. */
-            #if ( ipconfigINCLUDE_FULL_INET_ADDR == 1 )
-                {
                     ulIPAddress = prvPrepare_ReadIPAddress( pcHostName, xFamily, ppxAddressInfo );
-                }
-            #endif /* ipconfigINCLUDE_FULL_INET_ADDR == 1 */
 
             /* If a DNS cache is used then check the cache before issuing another DNS
              * request. */

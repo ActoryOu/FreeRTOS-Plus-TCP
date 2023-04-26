@@ -33,7 +33,7 @@
 /* Application level configuration options. */
     #include "FreeRTOS_DHCP.h"
     #include "FreeRTOSIPConfig.h"
-    #include "IPTraceMacroDefaults.h"
+    #include "FreeRTOSIPConfigDefaults.h"
 
     #define DHCPv6_MAX_CLIENT_SERVER_ID_LENGTH    128
 

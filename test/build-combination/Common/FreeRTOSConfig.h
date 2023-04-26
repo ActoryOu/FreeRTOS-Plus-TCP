@@ -209,10 +209,6 @@ void vLoggingPrintf( char const * pcFormat,
 
 #define configPROFILING                      ( 0 )
 
-/* Pseudo random number generator used by some tasks. */
-extern uint32_t ulRand( void );
-#define configRAND32()    ulRand()
-
 /* The platform that FreeRTOS is running on. */
 #define configPLATFORM_NAME    "WinSim"
 

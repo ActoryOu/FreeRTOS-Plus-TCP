@@ -16,7 +16,6 @@ this function:
 * FreeRTOS_sendto
 * FreeRTOS_setsockopt
 * FreeRTOS_socket
-* ulRand
 * vARPSendGratuitous
 * vApplicationIPNetworkEventHook
 * vLoggingPrintf

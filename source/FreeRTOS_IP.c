@@ -619,7 +619,7 @@ void vIPNetworkUpCalls( NetworkEndPoint_t * pxEndPoint )
     pxEndPoint->bits.bEndPointUp = pdTRUE_UNSIGNED;
 
     #if ( ipconfigUSE_NETWORK_EVENT_HOOK == 1 )
-        #if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
+        #if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
             {
                 vApplicationIPNetworkEventHook( eNetworkUp );
             }
@@ -776,7 +776,7 @@ BaseType_t FreeRTOS_NetworkDownFromISR( struct xNetworkInterface * pxNetworkInte
 }
 /*-----------------------------------------------------------*/
 
-#if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
+#if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
 
 /**
  * @brief Obtain a buffer big enough for a UDP payload of given size.
@@ -797,7 +797,7 @@ BaseType_t FreeRTOS_NetworkDownFromISR( struct xNetworkInterface * pxNetworkInte
     {
         return FreeRTOS_GetUDPPayloadBuffer_Multi( uxRequestedSizeBytes, uxBlockTimeTicks, ipTYPE_IPv4 );
     }
-#endif /* if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
+#endif /* if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
 /*-----------------------------------------------------------*/
 
 /**
@@ -883,7 +883,7 @@ void * FreeRTOS_GetUDPPayloadBuffer_Multi( size_t uxRequestedSizeBytes,
  * As that bug has been repaired, there is not an urgent reason to warn.
  * It is better though to use the advised priority scheme. */
 
-#if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
+#if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
 
 /* Provide backward-compatibility with the earlier FreeRTOS+TCP which only had
  * single network interface. */
@@ -907,7 +907,7 @@ void * FreeRTOS_GetUDPPayloadBuffer_Multi( size_t uxRequestedSizeBytes,
         #endif /* ipconfigUSE_DHCP */
         return FreeRTOS_IPInit_Multi();
     }
-#endif /* if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
+#endif /* if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
 /*-----------------------------------------------------------*/
 
 /**
@@ -1083,7 +1083,7 @@ void FreeRTOS_GetEndPointConfiguration( uint32_t * pulIPAddress,
 }
 /*-----------------------------------------------------------*/
 
-#if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
+#if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
 
 /**
  * @brief Get the current IPv4 address configuration of the first endpoint.
@@ -1108,7 +1108,7 @@ void FreeRTOS_GetEndPointConfiguration( uint32_t * pulIPAddress,
         FreeRTOS_GetEndPointConfiguration( pulIPAddress, pulNetMask,
                                            pulGatewayAddress, pulDNSServerAddress, pxEndPoint );
     }
-#endif /* if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
+#endif /* if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
 /*-----------------------------------------------------------*/
 
 /**
@@ -1154,7 +1154,7 @@ void FreeRTOS_SetEndPointConfiguration( const uint32_t * pulIPAddress,
 }
 /*-----------------------------------------------------------*/
 
-#if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
+#if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
 
 /**
  * @brief Set the current IPv4 network address configuration. Only non-NULL
@@ -1179,7 +1179,7 @@ void FreeRTOS_SetEndPointConfiguration( const uint32_t * pulIPAddress,
         FreeRTOS_SetEndPointConfiguration( pulIPAddress, pulNetMask,
                                            pulGatewayAddress, pulDNSServerAddress, pxEndPoint );
     }
-#endif /* if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
+#endif /* if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
 /*-----------------------------------------------------------*/
 
 #if ( ipconfigUSE_TCP == 1 )
@@ -2101,7 +2101,7 @@ uint32_t FreeRTOS_GetIPAddress( void )
 }
 /*-----------------------------------------------------------*/
 
-#if defined( ipconfigIPv4_BACKWARD_COMPATIBLE ) && ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
+#if ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 )
 
 /*
  * The helper functions here below assume that there is a single
@@ -2251,7 +2251,7 @@ uint32_t FreeRTOS_GetIPAddress( void )
         }
     }
 /*-----------------------------------------------------------*/
-#endif /* ( ipconfigIPv4_BACKWARD_COMPATIBLE != 0 ) */
+#endif /* ( ipconfigIPv4_BACKWARD_COMPATIBLE == 1 ) */
 
 /**
  * @brief Returns whether the IP task is ready.

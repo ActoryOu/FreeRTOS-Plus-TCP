@@ -620,10 +620,7 @@
                 pxICMPPacket->xIPHeader.ucHopLimit = 255U;
 
                 /* Source address "fe80::1" */
-                ( void ) memset( pxICMPPacket->xIPHeader.xSourceAddress.ucBytes, 0, sizeof( pxICMPPacket->xIPHeader.xSourceAddress.ucBytes ) );
-                pxICMPPacket->xIPHeader.xSourceAddress.ucBytes[ 0 ] = 0xfeU;
-                pxICMPPacket->xIPHeader.xSourceAddress.ucBytes[ 1 ] = 0x80U;
-                pxICMPPacket->xIPHeader.xSourceAddress.ucBytes[ 15 ] = 0x01U;
+                ( void ) memcpy( pxICMPPacket->xIPHeader.xSourceAddress.ucBytes, pxEndPoint->ipv6_settings.xIPAddress.ucBytes, sizeof( pxICMPPacket->xIPHeader.xSourceAddress.ucBytes ) );
 
                 /*ff02::1:ff5a:afe7 */
                 ( void ) memset( xTargetIPAddress.ucBytes, 0, sizeof( xTargetIPAddress.ucBytes ) );

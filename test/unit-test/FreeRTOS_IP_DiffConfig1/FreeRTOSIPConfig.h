@@ -105,14 +105,6 @@
  * http://www.freertos.org/Stacks-and-stack-overflow-checking.html. */
 #define ipconfigIP_TASK_STACK_SIZE_WORDS           ( configMINIMAL_STACK_SIZE * 5 )
 
-/* ipconfigRAND32() is called by the IP stack to generate random numbers for
- * things such as a DHCP transaction number or initial sequence number.  Random
- * number generation is performed via this macro to allow applications to use their
- * own random number generation method.  For example, it might be possible to
- * generate a random number by sampling noise on an analogue input. */
-extern uint32_t ulRand();
-#define ipconfigRAND32()    ulRand()
-
 /* If ipconfigUSE_NETWORK_EVENT_HOOK is set to 1 then FreeRTOS+TCP will call the
  * network event hook at the appropriate times.  If ipconfigUSE_NETWORK_EVENT_HOOK
  * is not set to 1 then the network event hook will never be called. See:
@@ -184,18 +176,6 @@ extern uint32_t ulRand();
  * age.  ipconfigMAX_ARP_AGE is specified in tens of seconds, so a value of 150 is
  * equal to 1500 seconds (or 25 minutes). */
 #define ipconfigMAX_ARP_AGE                       150
-
-/* Implementing FreeRTOS_inet_addr() necessitates the use of string handling
- * routines, which are relatively large.  To save code space the full
- * FreeRTOS_inet_addr() implementation is made optional, and a smaller and faster
- * alternative called FreeRTOS_inet_addr_quick() is provided.  FreeRTOS_inet_addr()
- * takes an IP in decimal dot format (for example, "192.168.0.1") as its parameter.
- * FreeRTOS_inet_addr_quick() takes an IP address as four separate numerical octets
- * (for example, 192, 168, 0, 1) as its parameters.  If
- * ipconfigINCLUDE_FULL_INET_ADDR is set to 1 then both FreeRTOS_inet_addr() and
- * FreeRTOS_indet_addr_quick() are available.  If ipconfigINCLUDE_FULL_INET_ADDR is
- * not set to 1 then only FreeRTOS_indet_addr_quick() is available. */
-#define ipconfigINCLUDE_FULL_INET_ADDR            1
 
 /* ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS defines the total number of network buffer that
  * are available to the IP stack.  The total number of network buffers is limited
