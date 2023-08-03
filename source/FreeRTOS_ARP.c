@@ -639,11 +639,14 @@ BaseType_t xCheckRequiresARPResolution( const NetworkBufferDescriptor_t * pxNetw
  *
  * @param[in] pxMACAddress Pointer to the MAC address whose entry needs to be updated.
  * @param[in] ulIPAddress the IP address whose corresponding entry needs to be updated.
+ * @param[in] pxEndPoint The end-point stored in the table.
  */
 void vARPRefreshCacheEntryAge( const MACAddress_t * pxMACAddress,
-                               const uint32_t ulIPAddress )
+                               const uint32_t ulIPAddress,
+                               struct xNetworkEndPoint * pxEndPoint )
 {
     BaseType_t x;
+    BaseType_t xIPFound = pdFALSE;
 
     if( pxMACAddress != NULL )
     {
@@ -654,6 +657,8 @@ void vARPRefreshCacheEntryAge( const MACAddress_t * pxMACAddress,
              * address being queried? */
             if( xARPCache[ x ].ulIPAddress == ulIPAddress )
             {
+                xIPFound = pdTRUE;
+
                 /* Does this cache entry have the same MAC address? */
                 if( memcmp( xARPCache[ x ].xMACAddress.ucBytes, pxMACAddress->ucBytes, sizeof( pxMACAddress->ucBytes ) ) == 0 )
                 {
@@ -662,6 +667,12 @@ void vARPRefreshCacheEntryAge( const MACAddress_t * pxMACAddress,
                     break;
                 }
             }
+        }
+
+        if( ( xIPFound == pdTRUE ) && ( x == ipconfigARP_CACHE_ENTRIES ) )
+        {
+            /* Update ARP table when matching IP address but mismatching MAC address. */
+            vARPRefreshCacheEntry( pxMACAddress, ulIPAddress, pxEndPoint );
         }
     }
 }

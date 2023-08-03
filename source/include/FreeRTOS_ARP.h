@@ -84,7 +84,8 @@ typedef struct xCacheLocation
  * is found then no action will be taken.
  */
 void vARPRefreshCacheEntryAge( const MACAddress_t * pxMACAddress,
-                               const uint32_t ulIPAddress );
+                               const uint32_t ulIPAddress,
+                               struct xNetworkEndPoint * pxEndPoint );
 
 /*
  * If ulIPAddress is already in the ARP cache table then reset the age of the
