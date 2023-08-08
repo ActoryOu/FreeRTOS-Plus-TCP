@@ -40,7 +40,7 @@
 /* Some constants defining the sizes of several parts of a packet.
  * These defines come before including the configuration header files. */
 #define ipSIZE_OF_IPv6_HEADER                    40U
-#define ipSIZE_OF_ICMPv6_HEADER                  24U
+#define ipSIZE_OF_ICMPv6_HEADER                  8U
 
 #define ipSIZE_OF_IPv6_ADDRESS                   16U
 
