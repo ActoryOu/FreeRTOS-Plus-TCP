@@ -32,7 +32,8 @@
   ],
   "DEF":
   [
-    "FREERTOS_TCP_ENABLE_VERIFICATION"
+    "FREERTOS_TCP_ENABLE_VERIFICATION",
+    "ipconfigNETWORK_MTU=586"
   ],
   "INC":
   [

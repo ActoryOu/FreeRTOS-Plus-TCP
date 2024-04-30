@@ -328,7 +328,7 @@
                         if( x == 0U )
                         {
                             uxResult = DNS_ReadNameField( &xSet,
-                                                          sizeof( xSet.pcName ) );
+                                                          xSet.uxSourceBytesRemaining );
                         }
                         else
                     #endif /* ipconfigUSE_DNS_CACHE || ipconfigDNS_USE_CALLBACKS */
@@ -620,7 +620,7 @@
             }
 
             uxResult = DNS_SkipNameField( pxSet->pucByte,
-                                          sizeof( pxSet->pcName ) );
+                                          pxSet->uxSourceBytesRemaining );
 
             /* Check for a malformed response. */
             if( uxResult == 0U )

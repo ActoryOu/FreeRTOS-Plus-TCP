@@ -12,6 +12,8 @@
 #include "cbmc.h"
 #include "../../utility/memory_assignments.c"
 
+int lIsIPv6Packet;
+
 /* This proof assumes pxTCPSocketLookup and pxGetNetworkBufferWithDescriptor
  * are implemented correctly.
  *
@@ -41,10 +43,29 @@ FreeRTOS_Socket_t * prvHandleListen_IPV4( FreeRTOS_Socket_t * pxSocket,
 {
     FreeRTOS_Socket_t * xRetSocket = ensure_FreeRTOS_Socket_t_is_allocated();
 
+    __CPROVER_assert( !lIsIPv6Packet, "Must not enter here while handling IPv6 packet" );
+
     if( xRetSocket )
     {
         /* This test case is for IPv4. */
         __CPROVER_assume( xRetSocket->bits.bIsIPv6 == pdFALSE );
+    }
+
+    return xRetSocket;
+}
+
+/* Abstraction of prvHandleListen_IPV6 */
+FreeRTOS_Socket_t * prvHandleListen_IPV6( FreeRTOS_Socket_t * pxSocket,
+                                          NetworkBufferDescriptor_t * pxNetworkBuffer )
+{
+    FreeRTOS_Socket_t * xRetSocket = ensure_FreeRTOS_Socket_t_is_allocated();
+
+    __CPROVER_assert( lIsIPv6Packet, "Must not enter here while handling IPv4 packet" );
+
+    if( xRetSocket )
+    {
+        /* This test case is for IPv6. */
+        __CPROVER_assume( xRetSocket->bits.bIsIPv6 == pdTRUE );
     }
 
     return xRetSocket;
@@ -61,7 +82,7 @@ FreeRTOS_Socket_t * pxTCPSocketLookup( uint32_t ulLocalIP,
     if( xRetSocket )
     {
         /* This test case is for IPv4. */
-        __CPROVER_assume( xRetSocket->bits.bIsIPv6 == pdFALSE );
+        __CPROVER_assume( xRetSocket->bits.bIsIPv6 == pdFALSE || xRetSocket->bits.bIsIPv6 == pdTRUE );
     }
 
     return xRetSocket;
@@ -86,27 +107,61 @@ NetworkBufferDescriptor_t * pxGetNetworkBufferWithDescriptor( size_t xRequestedS
  * guaranteed to be IPv4 packet. Thus returns IPv4 header size here directly. */
 size_t uxIPHeaderSizePacket( const NetworkBufferDescriptor_t * pxNetworkBuffer )
 {
-    return ipSIZE_OF_IPv4_HEADER;
+    size_t ret = ipSIZE_OF_IPv4_HEADER;
+
+    if( lIsIPv6Packet )
+    {
+        ret = ipSIZE_OF_IPv6_HEADER;
+    }
+
+    return ret;
 }
 
 /* Abstraction of uxIPHeaderSizePacket. Because we're testing IPv4 in this test case, all socket handlers returned
  * by functions are for IPv4. Thus returns IPv4 header size here directly. */
 size_t uxIPHeaderSizeSocket( const FreeRTOS_Socket_t * pxSocket )
 {
-    return ipSIZE_OF_IPv4_HEADER;
+    size_t ret = ipSIZE_OF_IPv4_HEADER;
+
+    if( lIsIPv6Packet )
+    {
+        ret = ipSIZE_OF_IPv6_HEADER;
+    }
+
+    return ret;
 }
 
 void harness()
 {
     NetworkBufferDescriptor_t * pxNetworkBuffer = safeMalloc( sizeof( NetworkBufferDescriptor_t ) );
+    size_t uxBufferSize;
+    EthernetHeader_t * pxEthernetHeader;
+
+    lIsIPv6Packet = nondet_bool();
 
     /* To avoid asserting on the network buffer being NULL. */
     __CPROVER_assume( pxNetworkBuffer != NULL );
+    if( lIsIPv6Packet )
+    {
+        __CPROVER_assume( uxBufferSize >= sizeof( TCPPacket_IPv6_t ) && uxBufferSize <= ipconfigNETWORK_MTU );
+    }
+    else
+    {
+        __CPROVER_assume( uxBufferSize >= sizeof( TCPPacket_t ) && uxBufferSize <= ipconfigNETWORK_MTU );
+    }
 
-    pxNetworkBuffer->pucEthernetBuffer = safeMalloc( sizeof( TCPPacket_t ) );
+    pxNetworkBuffer->pucEthernetBuffer = safeMalloc( uxBufferSize );
 
     /* To avoid asserting on the ethernet buffer being NULL. */
     __CPROVER_assume( pxNetworkBuffer->pucEthernetBuffer != NULL );
+
+    if( lIsIPv6Packet )
+    {
+        /* Ethernet frame type is checked before calling xProcessReceivedTCPPacket_IPV6. */
+        pxEthernetHeader = ( EthernetHeader_t * ) pxNetworkBuffer->pucEthernetBuffer;
+        __CPROVER_assume( pxEthernetHeader->usFrameType == ipIPv6_FRAME_TYPE );
+    }
+
 
     xProcessReceivedTCPPacket( pxNetworkBuffer );
 }
